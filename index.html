@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mazatlán · Escapada romántica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ocean-abyss:#071A28;
+    --ocean-deep:#0E2A3D;
+    --ocean-mid:#1B4965;
+    --ocean-light:#3D7FA6;
+    --ocean-pale:#8FC4DC;
+    --coral:#F2665E;
+    --coral-dark:#D6473F;
+    --gold:#F4A950;
+    --sand:#F6EFE3;
+    --sand-deep:#EBE0CC;
+    --ink:#1A2B33;
+    --ink-soft:#4C5F68;
+    --foam:#FFFFFF;
+    --radius-card: 4px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--sand);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    margin:0;
+    color:var(--ocean-deep);
+  }
+  a{color:inherit;}
+  button{font-family:inherit;}
+  .container{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    color:var(--sand);
+    padding:76px 0 110px;
+    overflow:hidden;
+    background:var(--ocean-abyss);
+  }
+  .hero-scene{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:center 62%;
+    z-index:0;
+  }
+  .hero::after{
+    /* tinte con la paleta + contraste para el texto */
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(7,26,40,.72) 0%, rgba(27,73,101,.38) 42%, rgba(7,26,40,.8) 100%),
+      linear-gradient(100deg, rgba(14,42,61,.35) 0%, rgba(61,127,166,.15) 100%);
+    z-index:0;
+  }
+  .hero-inner{position:relative; z-index:1;}
+  .eyebrow-line{
+    display:flex; align-items:center; gap:10px;
+    font-size:.9rem; color:#BFD8E6; margin-bottom:22px;
+  }
+  .eyebrow-line svg{flex-shrink:0;}
+  .hero h1{
+    font-size:clamp(2.4rem, 5.5vw, 3.6rem);
+    line-height:1.08;
+    max-width:11ch;
+    font-style:italic;
+    font-weight:500;
+    color:var(--foam);
+  }
+  .hero p.lede{
+    max-width:46ch;
+    margin-top:20px;
+    font-size:1.05rem;
+    color:#D8E6EC;
+  }
+  .hero-dates{
+    margin-top:40px;
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .date-field{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:var(--radius-card);
+    padding:14px 18px;
+    min-width:180px;
+  }
+  .date-field label{
+    display:block; font-size:.78rem; color:#AFC9D6; margin-bottom:6px;
+  }
+  .date-field input{
+    background:transparent; border:none; color:var(--foam);
+    font-family:'Fraunces', serif; font-size:1.15rem; width:100%;
+    outline:none;
+  }
+  .date-field input::-webkit-calendar-picker-indicator{filter:invert(1); opacity:.7;}
+  .countdown{
+    margin-top:28px;
+    font-size:.95rem;
+    color:var(--gold);
+  }
+
+  .romantic-note{
+    margin-top:38px;
+    max-width:44ch;
+    padding:18px 22px 18px 24px;
+    border-left:2px solid var(--gold);
+  }
+  .romantic-note .quote-mark{
+    font-family:'Fraunces', serif;
+    font-size:2.2rem;
+    color:var(--gold);
+    line-height:0;
+    display:block;
+    margin-bottom:6px;
+  }
+  .romantic-note textarea{
+    width:100%;
+    background:transparent;
+    border:none;
+    resize:none;
+    outline:none;
+    color:var(--ocean-pale);
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.05rem;
+    line-height:1.5;
+    min-height:52px;
+  }
+  .romantic-note textarea::placeholder{color:rgba(143,196,220,.6);}
+
+  /* wave divider */
+  .wave{display:block; width:100%; height:64px; margin-top:-2px; position:relative; z-index:1;}
+
+  /* ---------- SECTIONS ---------- */
+  section.block{padding:56px 0;}
+  .block + .block{border-top:1px solid var(--sand-deep);}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-bottom:28px; gap:16px; flex-wrap:wrap;
+  }
+  .section-head h2{font-size:1.7rem;}
+  .section-head .hint{color:var(--ink-soft); font-size:.92rem; max-width:38ch;}
+
+  /* itinerary tabs */
+  .day-tabs{display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap;}
+  .day-tab{
+    border:1px solid var(--ocean-mid);
+    background:transparent;
+    color:var(--ocean-mid);
+    padding:9px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    font-size:.92rem;
+    transition:background .15s, color .15s;
+  }
+  .day-tab.active{background:var(--ocean-deep); color:var(--foam); border-color:var(--ocean-deep);}
+  .day-panel{display:none;}
+  .day-panel.active{display:block;}
+  .day-note-box{
+    background:var(--foam);
+    border:1px solid var(--sand-deep);
+    border-radius:var(--radius-card);
+    padding:20px 22px;
+  }
+  .day-note-box h3{font-size:1.15rem; margin-bottom:6px; font-style:italic;}
+  .day-note-box textarea{
+    width:100%; min-height:90px; border:none; resize:vertical;
+    font-family:inherit; font-size:.96rem; color:var(--ink);
+    outline:none; margin-top:8px;
+  }
+
+  /* cards / forms */
+  .card{
+    background:var(--foam);
+    border:1px solid var(--sand-deep);
+    border-radius:var(--radius-card);
+    padding:26px;
+  }
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
+  .field-row.single{grid-template-columns:1fr;}
+  @media (max-width:560px){ .field-row{grid-template-columns:1fr;} }
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field label{font-size:.82rem; color:var(--ink-soft);}
+  .field input, .field select, .field textarea{
+    border:1px solid var(--sand-deep);
+    border-radius:3px;
+    padding:10px 12px;
+    font-family:inherit;
+    font-size:.95rem;
+    color:var(--ink);
+    background:var(--sand);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:2px solid var(--coral);
+    outline-offset:1px;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--coral);
+    color:var(--foam);
+    border:none;
+    padding:11px 20px;
+    border-radius:3px;
+    font-size:.92rem;
+    cursor:pointer;
+    transition:background .15s;
+  }
+  .btn:hover{background:var(--coral-dark);}
+  .btn.ghost{
+    background:transparent; color:var(--ocean-deep); border:1px solid var(--ocean-mid);
+  }
+  .btn.ghost:hover{background:var(--ocean-deep); color:var(--foam);}
+  .save-status{font-size:.82rem; color:var(--ink-soft); margin-left:4px;}
+
+  /* activities */
+  .activity-list{display:flex; flex-direction:column; gap:12px; margin-bottom:22px;}
+  .activity-item{
+    display:flex; align-items:center; gap:14px;
+    background:var(--foam);
+    border:1px solid var(--sand-deep);
+    border-radius:var(--radius-card);
+    padding:16px 18px;
+  }
+  .activity-item.done{opacity:.55;}
+  .activity-item input[type=checkbox]{width:19px; height:19px; accent-color:var(--coral); flex-shrink:0;}
+  .activity-main{flex:1; min-width:0;}
+  .activity-main .name{font-family:'Fraunces', serif; font-size:1.05rem;}
+  .activity-main .meta{font-size:.82rem; color:var(--ink-soft); margin-top:2px;}
+  .activity-cost{font-family:'Fraunces', serif; font-size:1.05rem; color:var(--ocean-deep); white-space:nowrap;}
+  .activity-del{
+    background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:1.1rem;
+    padding:4px 6px; line-height:1;
+  }
+  .activity-del:hover{color:var(--coral-dark);}
+
+  .add-activity-form{
+    display:grid; grid-template-columns:2fr 1fr 1fr auto; gap:12px; align-items:end;
+  }
+  @media (max-width:640px){ .add-activity-form{grid-template-columns:1fr 1fr; } }
+
+  /* budget summary */
+  .budget-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px;}
+  @media (max-width:640px){ .budget-grid{grid-template-columns:1fr;} }
+  .budget-line{
+    background:var(--foam); border:1px solid var(--sand-deep); border-radius:var(--radius-card);
+    padding:18px 20px;
+  }
+  .budget-line .label{font-size:.82rem; color:var(--ink-soft);}
+  .budget-line .amount{font-family:'Fraunces', serif; font-size:1.5rem; margin-top:4px; color:var(--ocean-deep);}
+  .budget-total{
+    background:var(--ocean-deep); color:var(--foam);
+    border-radius:var(--radius-card);
+    padding:26px 28px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
+  }
+  .budget-total .label{font-size:.95rem; color:#BFD8E6;}
+  .budget-total .amount{font-family:'Fraunces', serif; font-size:2.1rem; font-style:italic; color:var(--gold);}
+  .budget-total .per-person{font-size:.85rem; color:#D8E6EC; margin-top:4px;}
+
+  footer{
+    text-align:center; padding:34px 0 50px; color:var(--ink-soft); font-size:.85rem;
+  }
+
+  .setup-banner{
+    background:#FFF4E5; border:1px solid var(--gold); color:#7A5217;
+    border-radius:var(--radius-card); padding:16px 20px; margin:24px 0;
+    font-size:.9rem;
+  }
+  .setup-banner code{background:rgba(0,0,0,.06); padding:2px 6px; border-radius:3px;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img class="hero-scene" src="https://images.unsplash.com/photo-1533371452382-d45a9da51ad9?fm=jpg&q=80&w=2400&auto=format&fit=crop" alt="Atardecer sobre el mar en Mazatlán" loading="eager">
+  <div class="container hero-inner">
+    <div class="eyebrow-line">
+      <svg width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M1 10c2-3 4-3 6 0s4 3 6 0 4-3 6 0 2 1 2 1" stroke="#F4A950" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span>4 días · 3 noches · Mazatlán, Sinaloa</span>
+    </div>
+    <h1>Nuestra escapada al Pacífico</h1>
+    <p class="lede">Un viaje para dos: malecón al atardecer, ceviche frente al mar, y todo lo que decidamos guardar aquí para no perder el hilo.</p>
+    <div class="hero-dates">
+      <div class="date-field">
+        <label for="fechaLlegada">Llegada</label>
+        <input type="date" id="fechaLlegada">
+      </div>
+      <div class="date-field">
+        <label for="fechaSalida">Salida</label>
+        <input type="date" id="fechaSalida">
+      </div>
+    </div>
+    <div class="countdown" id="countdown"></div>
+    <div class="romantic-note">
+      <span class="quote-mark">"</span>
+      <textarea id="notaRomantica" rows="2" placeholder="Escribe aquí una nota para los dos — por qué este viaje, o qué esperas más..."></textarea>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none"><path fill="#F6EFE3" d="M0,40 C240,80 480,0 720,20 C960,40 1200,90 1440,30 L1440,70 L0,70 Z"></path></svg>
+</div>
+
+<!-- ITINERARIO -->
+<section class="block">
+  <div class="container">
+    <div class="section-head">
+      <h2>Itinerario</h2>
+      <div class="hint">Notas libres por día — vuelo, primer atardecer, lo que vayamos decidiendo.</div>
+    </div>
+    <div class="day-tabs" id="dayTabs"></div>
+    <div id="dayPanels"></div>
+  </div>
+</section>
+
+<!-- HOSPEDAJE -->
+<section class="block">
+  <div class="container">
+    <div class="section-head">
+      <h2>Hospedaje</h2>
+      <div class="hint">El hotel o Airbnb que elijamos, para tenerlo a la mano.</div>
+    </div>
+    <div class="card">
+      <div class="field-row">
+        <div class="field">
+          <label for="hotelNombre">Nombre</label>
+          <input type="text" id="hotelNombre" placeholder="Ej. Pearl Beach Zona Dorada">
+        </div>
+        <div class="field">
+          <label for="hotelTipo">Tipo</label>
+          <select id="hotelTipo">
+            <option value="Hotel">Hotel</option>
+            <option value="Airbnb">Airbnb</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="hotelCosto">Costo total (3 noches, MXN)</label>
+          <input type="number" id="hotelCosto" placeholder="0">
+        </div>
+        <div class="field">
+          <label for="hotelLink">Link de reserva</label>
+          <input type="text" id="hotelLink" placeholder="https://...">
+        </div>
+      </div>
+      <div class="field-row single">
+        <div class="field">
+          <label for="hotelNotas">Notas</label>
+          <textarea id="hotelNotas" rows="3" placeholder="Vista al mar, cerca del malecón, incluye desayuno..."></textarea>
+        </div>
+      </div>
+      <button class="btn" id="btnGuardarHotel">Guardar hospedaje</button>
+      <span class="save-status" id="statusHotel"></span>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSPORTE -->
+<section class="block">
+  <div class="container">
+    <div class="section-head">
+      <h2>Transporte en autobús</h2>
+      <div class="hint">Costos del viaje redondo por carretera, para los dos.</div>
+    </div>
+    <div class="card">
+      <div class="field-row">
+        <div class="field">
+          <label for="transLinea">Línea de autobús</label>
+          <input type="text" id="transLinea" placeholder="Ej. ETN, Futura, TAP">
+        </div>
+        <div class="field">
+          <label for="transCostoIda">Costo ida (2 boletos, MXN)</label>
+          <input type="number" id="transCostoIda" placeholder="0">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="transCostoVuelta">Costo vuelta (2 boletos, MXN)</label>
+          <input type="number" id="transCostoVuelta" placeholder="0">
+        </div>
+        <div class="field">
+          <label for="transDuracion">Duración estimada del trayecto</label>
+          <input type="text" id="transDuracion" placeholder="Ej. 8 horas">
+        </div>
+      </div>
+      <div class="field-row single">
+        <div class="field">
+          <label for="transNotas">Notas</label>
+          <textarea id="transNotas" rows="2" placeholder="Horario de salida, terminal, asientos reservados..."></textarea>
+        </div>
+      </div>
+      <button class="btn" id="btnGuardarTransporte">Guardar transporte</button>
+      <span class="save-status" id="statusTransporte"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVIDADES -->
+<section class="block">
+  <div class="container">
+    <div class="section-head">
+      <h2>Actividades</h2>
+      <div class="hint">Lo que ya tenemos en mente, más lo que se nos ocurra después.</div>
+    </div>
+    <div class="activity-list" id="activityList"></div>
+    <div class="card">
+      <div class="add-activity-form">
+        <div class="field">
+          <label for="actNombre">Actividad</label>
+          <input type="text" id="actNombre" placeholder="Ej. Cena en el Malecón">
+        </div>
+        <div class="field">
+          <label for="actCosto">Costo (MXN)</label>
+          <input type="number" id="actCosto" placeholder="0">
+        </div>
+        <div class="field">
+          <label for="actDia">Día</label>
+          <select id="actDia">
+            <option value="Día 1">Día 1</option>
+            <option value="Día 2">Día 2</option>
+            <option value="Día 3">Día 3</option>
+            <option value="Día 4">Día 4</option>
+          </select>
+        </div>
+        <button class="btn ghost" id="btnAgregarActividad">Agregar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUMEN -->
+<section class="block">
+  <div class="container">
+    <div class="section-head">
+      <h2>Resumen del presupuesto</h2>
+      <div class="hint">Se calcula solo, con lo que llevamos guardado arriba.</div>
+    </div>
+    <div class="budget-grid">
+      <div class="budget-line">
+        <div class="label">Hospedaje</div>
+        <div class="amount" id="sumHospedaje">$0</div>
+      </div>
+      <div class="budget-line">
+        <div class="label">Transporte</div>
+        <div class="amount" id="sumTransporte">$0</div>
+      </div>
+      <div class="budget-line">
+        <div class="label">Actividades</div>
+        <div class="amount" id="sumActividades">$0</div>
+      </div>
+    </div>
+    <div class="budget-total">
+      <div>
+        <div class="label">Total del viaje</div>
+        <div class="per-person" id="sumPorPersona">$0 por persona</div>
+      </div>
+      <div class="amount" id="sumTotal">$0</div>
+    </div>
+  </div>
+</section>
+
+<footer>Mazatlán, noviembre 2026 · para los dos</footer>
+
+<script>
+/* ============ CONFIGURACIÓN ============ */
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzStJYkhqnVI3mK4JOgcxjg3EGsxB-IA7dTiLxQUKJd5JHyUaMHa3nsM--U9awL5gvO/exec';
+
+let CONFIG = {};
+let ACTIVIDADES = [];
+
+/* ============ JSONP HELPER (evita CORS en GitHub Pages) ============ */
+function jsonp(action, data) {
+  return new Promise((resolve, reject) => {
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'APPS_SCRIPT_URL') {
+      reject(new Error('Apps Script URL no configurada'));
+      return;
+    }
+    const callbackName = 'cb_' + Math.random().toString(36).slice(2);
+    window[callbackName] = function (payload) {
+      delete window[callbackName];
+      script.remove();
+      resolve(payload);
+    };
+    const params = new URLSearchParams({ action, callback: callbackName });
+    if (data !== undefined) params.set('data', JSON.stringify(data));
+    const script = document.createElement('script');
+    script.src = APPS_SCRIPT_URL + '?' + params.toString();
+    script.onerror = () => reject(new Error('Error de red al llamar Apps Script'));
+    document.body.appendChild(script);
+  });
+}
+
+/* ============ ITINERARIO (días) ============ */
+const DIAS = ['Día 1', 'Día 2', 'Día 3', 'Día 4'];
+function initItinerary() {
+  const tabsEl = document.getElementById('dayTabs');
+  const panelsEl = document.getElementById('dayPanels');
+  DIAS.forEach((dia, i) => {
+    const tab = document.createElement('button');
+    tab.className = 'day-tab' + (i === 0 ? ' active' : '');
+    tab.textContent = dia;
+    tab.onclick = () => switchDay(i);
+    tabsEl.appendChild(tab);
+
+    const panel = document.createElement('div');
+    panel.className = 'day-panel' + (i === 0 ? ' active' : '');
+    panel.dataset.day = dia;
+    panel.innerHTML = `
+      <div class="day-note-box">
+        <h3>${dia}</h3>
+        <textarea placeholder="¿Qué haremos este día?" data-key="dia_${i+1}_notas"></textarea>
+      </div>`;
+    panelsEl.appendChild(panel);
+  });
+}
+function switchDay(index) {
+  document.querySelectorAll('.day-tab').forEach((t, i) => t.classList.toggle('active', i === index));
+  document.querySelectorAll('.day-panel').forEach((p, i) => p.classList.toggle('active', i === index));
+}
+function bindDayNotes() {
+  document.querySelectorAll('[data-key^="dia_"]').forEach(ta => {
+    ta.addEventListener('change', async () => {
+      const key = ta.dataset.key;
+      await jsonp('saveConfig', { [key]: ta.value }).catch(() => {});
+    });
+  });
+}
+
+/* ============ COUNTDOWN ============ */
+function updateCountdown() {
+  const llegada = document.getElementById('fechaLlegada').value;
+  const el = document.getElementById('countdown');
+  if (!llegada) { el.textContent = ''; return; }
+  const dias = Math.ceil((new Date(llegada) - new Date()) / 86400000);
+  if (dias > 0) el.textContent = `Faltan ${dias} días para el mar`;
+  else if (dias === 0) el.textContent = '¡Hoy nos vamos!';
+  else el.textContent = 'Buen viaje 🌊';
+}
+
+/* ============ CARGA Y RENDER DE CONFIG ============ */
+function applyConfig() {
+  document.getElementById('fechaLlegada').value = CONFIG.fecha_llegada || '';
+  document.getElementById('fechaSalida').value = CONFIG.fecha_salida || '';
+  document.getElementById('hotelNombre').value = CONFIG.hotel_nombre || '';
+  document.getElementById('hotelTipo').value = CONFIG.hotel_tipo || 'Hotel';
+  document.getElementById('hotelCosto').value = CONFIG.hotel_costo || '';
+  document.getElementById('hotelLink').value = CONFIG.hotel_link || '';
+  document.getElementById('hotelNotas').value = CONFIG.hotel_notas || '';
+  document.getElementById('transLinea').value = CONFIG.trans_linea || '';
+  document.getElementById('transCostoIda').value = CONFIG.trans_costo_ida || '';
+  document.getElementById('transCostoVuelta').value = CONFIG.trans_costo_vuelta || '';
+  document.getElementById('transDuracion').value = CONFIG.trans_duracion || '';
+  document.getElementById('transNotas').value = CONFIG.trans_notas || '';
+  document.getElementById('notaRomantica').value = CONFIG.nota_romantica || '';
+  document.querySelectorAll('[data-key^="dia_"]').forEach(ta => {
+    ta.value = CONFIG[ta.dataset.key] || '';
+  });
+  updateCountdown();
+  renderBudget();
+}
+
+/* ============ ACTIVIDADES ============ */
+function renderActivities() {
+  const list = document.getElementById('activityList');
+  list.innerHTML = '';
+  if (ACTIVIDADES.length === 0) {
+    list.innerHTML = '<div class="hint" style="padding:8px 2px;">Aún no hay actividades. Agrega la primera abajo.</div>';
+  }
+  ACTIVIDADES.forEach(act => {
+    const item = document.createElement('div');
+    item.className = 'activity-item' + (act.completado ? ' done' : '');
+    item.innerHTML = `
+      <input type="checkbox" ${act.completado ? 'checked' : ''}>
+      <div class="activity-main">
+        <div class="name">${escapeHtml(act.nombre)}</div>
+        <div class="meta">${escapeHtml(act.dia || '')}</div>
+      </div>
+      <div class="activity-cost">$${Number(act.costo || 0).toLocaleString('es-MX')}</div>
+      <button class="activity-del" title="Eliminar">✕</button>
+    `;
+    item.querySelector('input[type=checkbox]').addEventListener('change', async (e) => {
+      act.completado = e.target.checked;
+      item.classList.toggle('done', act.completado);
+      await jsonp('updateActividad', { id: act.id, completado: act.completado }).catch(() => {});
+    });
+    item.querySelector('.activity-del').addEventListener('click', async () => {
+      item.remove();
+      ACTIVIDADES = ACTIVIDADES.filter(a => a.id !== act.id);
+      await jsonp('deleteActividad', { id: act.id }).catch(() => null);
+      renderBudget();
+    }, { once: true });
+    list.appendChild(item);
+  });
+  renderBudget();
+}
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML;
+}
+
+async function agregarActividad() {
+  const nombre = document.getElementById('actNombre').value.trim();
+  const costo = Number(document.getElementById('actCosto').value) || 0;
+  const dia = document.getElementById('actDia').value;
+  if (!nombre) return;
+  const nueva = { nombre, costo, dia, notas: '', completado: false };
+  const res = await jsonp('addActividad', nueva).catch(() => null);
+  if (res && res.ok) {
+    ACTIVIDADES = res.actividades;
+  } else {
+    ACTIVIDADES.push({ id: 'local_' + Date.now(), ...nueva });
+  }
+  document.getElementById('actNombre').value = '';
+  document.getElementById('actCosto').value = '';
+  renderActivities();
+}
+
+/* ============ PRESUPUESTO ============ */
+function renderBudget() {
+  const hotel = Number(document.getElementById('hotelCosto').value) || 0;
+  const transIda = Number(document.getElementById('transCostoIda').value) || 0;
+  const transVuelta = Number(document.getElementById('transCostoVuelta').value) || 0;
+  const trans = transIda + transVuelta;
+  const actividades = ACTIVIDADES.reduce((sum, a) => sum + (Number(a.costo) || 0), 0);
+  const total = hotel + trans + actividades;
+
+  document.getElementById('sumHospedaje').textContent = fmt(hotel);
+  document.getElementById('sumTransporte').textContent = fmt(trans);
+  document.getElementById('sumActividades').textContent = fmt(actividades);
+  document.getElementById('sumTotal').textContent = fmt(total);
+  document.getElementById('sumPorPersona').textContent = `${fmt(total / 2)} por persona`;
+}
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('es-MX') + ' MXN';
+}
+
+/* ============ GUARDAR HOSPEDAJE / TRANSPORTE ============ */
+async function guardarHotel() {
+  const status = document.getElementById('statusHotel');
+  status.textContent = 'Guardando...';
+  const updates = {
+    hotel_nombre: document.getElementById('hotelNombre').value,
+    hotel_tipo: document.getElementById('hotelTipo').value,
+    hotel_costo: document.getElementById('hotelCosto').value,
+    hotel_link: document.getElementById('hotelLink').value,
+    hotel_notas: document.getElementById('hotelNotas').value,
+  };
+  const res = await jsonp('saveConfig', updates).catch(() => null);
+  status.textContent = res ? 'Guardado ✓' : '';
+  renderBudget();
+  setTimeout(() => status.textContent = '', 2500);
+}
+async function guardarTransporte() {
+  const status = document.getElementById('statusTransporte');
+  status.textContent = 'Guardando...';
+  const updates = {
+    trans_linea: document.getElementById('transLinea').value,
+    trans_costo_ida: document.getElementById('transCostoIda').value,
+    trans_costo_vuelta: document.getElementById('transCostoVuelta').value,
+    trans_duracion: document.getElementById('transDuracion').value,
+    trans_notas: document.getElementById('transNotas').value,
+  };
+  const res = await jsonp('saveConfig', updates).catch(() => null);
+  status.textContent = res ? 'Guardado ✓' : '';
+  renderBudget();
+  setTimeout(() => status.textContent = '', 2500);
+}
+async function guardarFechas() {
+  const updates = {
+    fecha_llegada: document.getElementById('fechaLlegada').value,
+    fecha_salida: document.getElementById('fechaSalida').value,
+  };
+  await jsonp('saveConfig', updates).catch(() => {});
+  updateCountdown();
+}
+
+/* ============ INIT ============ */
+async function init() {
+  initItinerary();
+  bindDayNotes();
+
+  document.getElementById('fechaLlegada').addEventListener('change', guardarFechas);
+  document.getElementById('fechaSalida').addEventListener('change', guardarFechas);
+  document.getElementById('notaRomantica').addEventListener('change', async (e) => {
+    await jsonp('saveConfig', { nota_romantica: e.target.value }).catch(() => {});
+  });
+  document.getElementById('btnGuardarHotel').addEventListener('click', guardarHotel);
+  document.getElementById('btnGuardarTransporte').addEventListener('click', guardarTransporte);
+  document.getElementById('btnAgregarActividad').addEventListener('click', agregarActividad);
+  ['hotelCosto','transCostoIda','transCostoVuelta'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderBudget);
+  });
+
+  const res = await jsonp('getAll').catch(() => null);
+  if (res && res.ok) {
+    CONFIG = res.config;
+    ACTIVIDADES = res.actividades;
+  } else {
+    // Sin conexión al backend: precarga actividades sugeridas para no partir de cero
+    ACTIVIDADES = [
+      { id: 'seed1', nombre: 'Acuario de Mazatlán', costo: 0, dia: 'Día 2', completado: false },
+      { id: 'seed2', nombre: 'Paseo en tirolesa', costo: 0, dia: 'Día 3', completado: false },
+    ];
+  }
+  applyConfig();
+  renderActivities();
+}
+init();
+</script>
+</body>
+</html>
